@@ -14,6 +14,7 @@ export const getEmployers = async (): Promise<Employer[]> => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API}/employers/?all=true`)
     const data = await res.json();
     let parsedData: Employer[] = [];
+    if (!data) return parsedData;
     data.forEach((row: any) => {
         console.log(row);
         parsedData.push({

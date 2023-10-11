@@ -12,6 +12,8 @@ const useEmployers = () => {
       const [data, industry] = await Promise.all([getEmployers(), getIndustries()])
       setData(data);
       setIndustry(industry);
+      console.log(data)
+      console.log(industry)
     };
     fetchData();
   }, [])
