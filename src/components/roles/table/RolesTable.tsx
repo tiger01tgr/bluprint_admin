@@ -4,7 +4,7 @@ import useRoles from './useRoles';
 import { Role } from '@/functions/dataFetching/roles/Roles';
 
 const RolesTable = () => {
-    const { data, createRole, editRole, deleteRole } = useRoles();
+    const { roles, createRole, editRole, deleteRole } = useRoles();
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -67,7 +67,7 @@ const RolesTable = () => {
                 </tr>
             </thead>
             <tbody>
-                {data.map((row) => (
+                {roles.map((row) => (
                 <tr key={row.id}>
                     <td className="p-2 border-b border-gray-300">{row.name}</td>
                     <td className="p-2 border-b border-gray-300">

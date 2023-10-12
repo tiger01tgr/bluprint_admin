@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 
 const useEmployers = () => {
 
-  const [data, setData] = useState<Employer[]>([]);
+  const [employers, setData] = useState<Employer[]>([]);
   const [industry, setIndustry] = useState<Industry[]>([]);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const useEmployers = () => {
 
   return (
     {
-      data,
+      employers,
       industry,
       createEmployer,
       deleteEmployer,

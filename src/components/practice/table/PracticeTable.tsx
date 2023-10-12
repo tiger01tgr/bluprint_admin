@@ -1,21 +1,30 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import useEmployers from './useEmployers';
-import { Employer } from '@/functions/dataFetching/employers/Employers';
+import usePractice from './usePractice';
 import SelectDropdown from '@/components/general/Select/Select';
+import { PracticeQuestion, PracticeSet } from '@/functions/dataFetching/practiceSets/PracticeSets';
+import useEmployers from '@/components/employers/table/useEmployers';
+import useRoles from '@/components/roles/table/useRoles';
+import PracticeQuestionsCreator from './PracticeQuestionsCreator';
 
-const EmployerTable = () => {
-    const { employers, industry, createEmployer, deleteEmployer, editEmployer } = useEmployers();
+
+const PracticeTable = () => {
+    const { createPracticeSet } = usePractice();
+    const { employers } = useEmployers();
+    const { roles } = useRoles();
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [createEmployerName, setCreateEmployerName] = useState('');
-    const [createIndustry, setCreateIndustry] = useState('');
-    const [selectedRow, setSelectedRow] = useState<Employer>();
-    const [uploadedLogo, setUploadedLogo] = useState<File>();
+    const [createPracticeSetName, setCreatePracticeSetName] = useState('');
+    const [createEmployerId, setCreateEmployerId] = useState(null);
+    const [createRoleId, setCreateRoleId] = useState();
+    const [createInterviewType, setCreateInterviewType] = useState('');
+    const [createQuestionsList, setCreateQuestionsList] = useState<PracticeQuestion[]>([]);
+    const [selectedRow, setSelectedRow] = useState<PracticeSet>();
 
+    const [data, setData] = useState<PracticeSet[]>([]);
 
-    const openEditModal = (row: Employer) => {
+    const openEditModal = (row: PracticeSet) => {
         setSelectedRow(row);
         setShowEditModal(true);
     };
@@ -33,64 +42,64 @@ const EmployerTable = () => {
         setShowCreateModal(false);
     };
 
-    const createEmployerModal = () => {
-        if (uploadedLogo) {
-            createEmployer(createEmployerName, createIndustry, uploadedLogo)
-        }
-        else {
-            console.log("logo not found")
-        }
-        setShowCreateModal(false);
-    }
+    const createPracticeSetModal = () => {
+        console.log(createPracticeSetName)
+        console.log(createEmployerId)
+        console.log(createRoleId)
+        console.log(createInterviewType)
+        console.log(createQuestionsList)
 
-    const handleLogoSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const file = Object(e.currentTarget.files)[0];
-        setUploadedLogo(file);
+        if (createPracticeSetName && createEmployerId && createRoleId && createInterviewType){
+            createPracticeSet(createPracticeSetName, createEmployerId, createRoleId, createInterviewType, createQuestionsList)
+            setShowCreateModal(false);
+        }
+
     }
 
     return (
         <div className="py-4 w-full">
             <div className="flex justify-evenly mb-4">
-            <h2 className="text-2xl font-semibold">Employer Table</h2>
+            <h2 className="text-2xl font-semibold">Practice Sets Table</h2>
             <button
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                 onClick={openCreateModal}
             >
-                Create an Employer
+                Create a Practice Set
             </button>
             </div>
             <table className="w-full border-collapse border border-gray-300">
             <thead className="bg-gray-200 text-left">
                 <tr>
                 <th className="p-2 sticky top-0 bg-white border-b border-gray-300">
-                    Employer Name
+                    Name
                 </th>
                 <th className="p-2 sticky top-0 bg-white border-b border-gray-300">
-                    Logo
+                    Employer
                 </th>
                 <th className="p-2 sticky top-0 bg-white border-b border-gray-300">
-                    Industry
+                    Role
                 </th>
                 <th className="p-2 sticky top-0 bg-white border-b border-gray-300">
-                    Status
+                    Interview Type
                 </th>
                 <th className="p-2 sticky top-0 bg-white border-b border-gray-300">
-                    Edit
+                    Delete
                 </th>
                 </tr>
             </thead>
             <tbody>
-                {employers.map((row) => (
+                {data.map((row) => (
                 <tr key={row.id}>
                     <td className="p-2 border-b border-gray-300">{row.name}</td>
                     <td className="p-2 border-b border-gray-300">
-                        <img src={row.logo} alt="logo" className="h-10 w-10"/>
+                        {row.employerName}
                     </td>
-                    <td className="p-2 border-b border-gray-300">{row.industry}</td>
+                    <td className="p-2 border-b border-gray-300">{row.roleName}</td>
+                    <td className="p-2 border-b border-gray-300">{row.interviewType}</td>
                     <td className="p-2 border-b border-gray-300">
                     <button
                         className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                        onClick={() => deleteEmployer(row.id.toString())}
+                        onClick={() => {}}
                     >
                         {row.deleted === true ? "Deleted already/not implemented" : "Delete"}
                     </button>
@@ -108,11 +117,9 @@ const EmployerTable = () => {
             </tbody>
             </table>
 
-            {/* Edit Modal */}
-            {showEditModal && selectedRow && (
+            {/* {showEditModal && selectedRow && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
                 <div className="bg-white p-4 rounded shadow-md">
-                {/* Edit form can go here */}
                 <h2 className="text-2xl font-semibold">Edit Employer</h2>
                 <p>Employer Name:
                     <input 
@@ -138,31 +145,37 @@ const EmployerTable = () => {
                 </button>
                 </div>
             </div>
-            )}
+            )} */}
 
             {showCreateModal && (
                 <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
                 <div className="bg-white p-4 rounded shadow-md flex justify-center flex-col gap-4 w-1/2">
-                    <h2 className="text-2xl font-semibold">Create an Employer</h2>
+                    <h2 className="text-2xl font-semibold">Create a Practice Set</h2>
                     <div className="flex flex-row w-full">
-                        <p className="p-1">Employer Name: </p>
+                        <p className="p-1">Name: </p>
                         <input 
                             className="w-5/6 px-2" 
-                            value={createEmployerName}
-                            onChange={(e) => setCreateEmployerName(e.target.value)}
+                            value={createPracticeSetName}
+                            onChange={(e) => setCreatePracticeSetName(e.target.value)}
                         ></input>
+                    </div>
+                    <div>
+                        <p>Interview Type: </p>
+                        <input value={createInterviewType} onChange={(e) => setCreateInterviewType(e.target.value)}></input>
                     </div>
                     <div className="flex flex-row justify-evenly">
                         <div>
-                            <label>Logo</label>
-                            <input id="file" type="file" onChange={handleLogoSelected}/>
+                            <SelectDropdown title="Employer" placeholder="select an employer" options={employers} setter={setCreateEmployerId}/>
                         </div>
                         <div>
-                            <SelectDropdown title="Industry" placeholder="select an industry" options={industry} setter={setCreateIndustry}/>
+                            <SelectDropdown title="Roles" placeholder="select a role" options={roles} setter={setCreateRoleId}/>
                         </div>
                     </div>
+                    <div>
+                        <PracticeQuestionsCreator setter={setCreateQuestionsList}/>
+                    </div>
                     <div className="w-full flex flex-row">
-                        <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={createEmployerModal}>
+                        <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={createPracticeSetModal}>
                             Create
                         </button>
                         <button
@@ -179,4 +192,4 @@ const EmployerTable = () => {
     );
 };
 
-export default EmployerTable;
+export default PracticeTable;

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 
 const useRoles = () => {
 
-    const [data, setData] = useState<Role[]>([]);
+    const [roles, setData] = useState<Role[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,7 +28,7 @@ const useRoles = () => {
 
     return (
         {
-            data,
+            roles,
             createRole,
             editRole,
             deleteRole,
