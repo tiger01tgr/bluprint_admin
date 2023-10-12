@@ -16,7 +16,6 @@ export const getEmployers = async (): Promise<Employer[]> => {
     let parsedData: Employer[] = [];
     if (!data) return parsedData;
     data.forEach((row: any) => {
-        console.log(row);
         parsedData.push({
             id: row.ID,
             name: row.Name,
@@ -52,16 +51,15 @@ export const deleteEmployerCall = async (id: string) => {
     })
 }
 
-export const editEmployerCall = async (id: string, name: string, industryId: number, file: File) => {
+export const editEmployerCall = async (id: string, name: string, industryId: string, file: File) => {
+    const formData = new FormData();
+    formData.append('logo', file);
     fetch(`${process.env.NEXT_PUBLIC_API}/employers/?id=${id}&name=${name}&industryId=${industryId}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            name,
-            industryId,
-        }),
+        body: formData,
     })
     .then((res) => res.json())
 }

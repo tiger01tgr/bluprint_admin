@@ -5,7 +5,7 @@ import { Employer } from '@/functions/dataFetching/employers/Employers';
 import SelectDropdown from '@/components/general/Select/Select';
 
 const EmployerTable = () => {
-    const { data, industry, createEmployer, deleteEmployer } = useEmployers();
+    const { data, industry, createEmployer, deleteEmployer, editEmployer } = useEmployers();
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -115,8 +115,22 @@ const EmployerTable = () => {
                 <div className="bg-white p-4 rounded shadow-md">
                 {/* Edit form can go here */}
                 <h2 className="text-2xl font-semibold">Edit Employer</h2>
-                <p>Employer Name: {selectedRow.name}</p>
-                <p>Industry: {selectedRow.industry}</p>
+                <p>Employer Name:
+                    <input 
+                        className="w-5/6 px-2" 
+                        value={selectedRow.name}
+                        onChange={(e) => setSelectedRow({id: selectedRow.id, name: e.target.value, logo: selectedRow.logo, industry: selectedRow.industry, industryId: selectedRow.industryId, deleted: selectedRow.deleted})}
+                    ></input>
+                </p>
+                <div className="flex flex-row justify-evenly">
+                        <div>
+                            <label>Select a new Logo</label>
+                            <input id="file" type="file" onChange={handleLogoSelected}/>
+                        </div>
+                        <div>
+                            <SelectDropdown title="Industry" placeholder="select an industry" options={industry} setter={setCreateIndustry}/>
+                        </div>
+                    </div>
                 <button
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                     onClick={closeEditModal}
