@@ -3,12 +3,12 @@ import React, { useState, useEffect } from 'react'
 
 const useJobTypes = () => {
 
-    const [data, setData] = useState<JobType[]>([])
+    const [jobTypes, setJobTypes] = useState<JobType[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await getJobTypes()
-            setData(data)
+            setJobTypes(data)
         }
         fetchData()
     }, [])
@@ -30,7 +30,7 @@ const useJobTypes = () => {
 
     return (
         {
-            data,
+            jobTypes,
             createJobType,
         }
     )

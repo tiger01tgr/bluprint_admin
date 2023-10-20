@@ -9,7 +9,7 @@ import PracticeQuestionsCreator from './PracticeQuestionsCreator';
 
 
 const PracticeTable = () => {
-    const { createPracticeSet } = usePractice();
+    const { questionSets, createPracticeSet } = usePractice();
     const { employers } = useEmployers();
     const { roles } = useRoles();
 

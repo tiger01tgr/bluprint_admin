@@ -4,7 +4,7 @@ import useJobTypes from './useJobTypes'
 import { JobType } from '@/functions/dataFetching/jobtypes/JobTypes'
 
 const IndustryTable = () => {
-    const { data, createJobType } = useJobTypes()
+    const { jobTypes, createJobType } = useJobTypes()
     const [showEditModal, setShowEditModal] = useState(false)
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [createJobTypeName, setCreateJobTypeName] = useState('')
@@ -66,7 +66,7 @@ const IndustryTable = () => {
                 </tr>
             </thead>
             <tbody>
-                {data.map((row) => (
+                {jobTypes.map((row) => (
                 <tr key={row.id}>
                     <td className="p-2 border-b border-gray-300">{row.name}</td>
                     <td className="p-2 border-b border-gray-300">
