@@ -23,7 +23,7 @@ const SelectDropdown: React.FC<Props> = ({ title, placeholder, options, setter }
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="text-black bg-white">
+      <SelectContent className="overflow-y-auto max-h-[20rem] text-black bg-white">
         <SelectGroup>
           <SelectLabel>{title}</SelectLabel>
           {options.map(
