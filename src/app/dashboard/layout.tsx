@@ -27,6 +27,9 @@ const DashboardLayout = ({children}: {children: React.ReactNode}) => {
                 <li>
                     <a href="/dashboard/roles" className="block hover:bg-blue-700 px-4 py-2 rounded transition duration-300">Roles</a>
                 </li>
+                <li>
+                    <a href="/dashboard/jobtypes" className="block hover:bg-blue-700 px-4 py-2 rounded transition duration-300">Job Types</a>
+                </li>
             </ul>
         </aside>
         <main className="flex-1">

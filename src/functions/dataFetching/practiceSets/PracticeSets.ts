@@ -16,7 +16,7 @@ export type PracticeQuestion = {
 }
 
 export const createPracticeSetCall = async (name: string, employerId: number, roleId: number, interviewType: string, questionList: PracticeQuestion[]) => {
-    const queryParams = `name=${name}&employerId=${employerId}&roleId=${roleId}&interviewType=${interviewType}`;
+    const queryParams = `name=${name}&employerId=${employerId}&roleId=${roleId}&type=${interviewType}`;
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API}/practice/?${queryParams}`, {
         method: 'POST',
