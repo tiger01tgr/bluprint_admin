@@ -49,7 +49,7 @@ const EmployerTable = () => {
     }
 
     return (
-        <div className="py-4 w-full">
+        <div className="py-4 w-full h-auto">
             <div className="flex justify-evenly mb-4">
             <h2 className="text-2xl font-semibold">Employer Table</h2>
             <button

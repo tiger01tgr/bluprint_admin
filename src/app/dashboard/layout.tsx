@@ -2,12 +2,15 @@ import React from 'react'
 
 const DashboardLayout = ({children}: {children: React.ReactNode}) => {
   return (
-    <div className="flex h-screen bg-gray-200">
+    <div className="flex bg-gray-200 h-auto w-screen">
         <aside className="w-64 bg-blue-600 text-white p-4">
             <h2 className="text-2xl font-semibold mb-4">Bluprint Admin</h2>
             <ul className="space-y-2">
                 <li>
                     <a href="/dashboard" className="block hover:bg-blue-700 px-4 py-2 rounded transition duration-300">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/dashboard/feedback/?page=1&limit=20" className="block hover:bg-blue-700 px-4 py-2 rounded transition duration-300">Feedback</a>
                 </li>
                 <li>
                     <a href="/dashboard/users" className="block hover:bg-blue-700 px-4 py-2 rounded transition duration-300">Users</a>
