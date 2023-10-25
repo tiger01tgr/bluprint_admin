@@ -44,6 +44,8 @@ export type SessionForReview = {
     practiceSessionId: number;
     questionId: number;
     url: string;
+    questionText: string;
+    timeLimit: number;
 } 
 
 export const getCompletedPracticeSession = async (id: number): Promise<SessionForReview[] | null> => {
@@ -59,7 +61,25 @@ export const getCompletedPracticeSession = async (id: number): Promise<SessionFo
             practiceSessionId: row.practice_session_id,
             questionId: row.question_id,
             url: row.url,
+            questionText: row.question_text,
+            timeLimit: row.time_limit
         });
     });
     return parsedData;
+}
+
+export const postFeedbackByIds = async (id: number, responsesArray: string[], feedbackArray: string[]) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/feedback/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            submission_ids: responsesArray,
+            feedback: feedbackArray
+        }),
+    })
+    if (!res.ok) {
+        console.log('oops')
+    }
 }

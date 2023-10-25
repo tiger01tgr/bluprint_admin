@@ -1,5 +1,5 @@
 'use client'
-import { SessionForReview, getCompletedPracticeSession } from '@/functions/dataFetching/feedback/Feedback'
+import { SessionForReview, getCompletedPracticeSession, postFeedbackByIds } from '@/functions/dataFetching/feedback/Feedback'
 import { useState, useEffect } from 'react'
 
 
@@ -23,15 +23,18 @@ const useFeedbackEntry = (id: number) => {
         fetchData()
     }, [id])
 
-    const createFeedbackEntry = async (id: number, feedback: string) => {
-        // implement here
+    const postFeedback = async (responsesArray: string[], feedbackArray: string[]) => {
+        if (!id || responsesArray.length === 0 || feedbackArray.length === 0) {
+            return
+        }
+        await postFeedbackByIds(id, responsesArray, feedbackArray)
     }
 
     return {
         session,
         loading,
         error,
-        createFeedbackEntry
+        postFeedback
     }
 }
 

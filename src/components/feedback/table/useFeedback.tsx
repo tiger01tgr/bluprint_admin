@@ -21,7 +21,7 @@ const useFeedback = (page: number, limit: number) => {
     return (
         {
             sessions,
-            loading
+            loading,
         }
     )
 }
